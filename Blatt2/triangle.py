@@ -3,13 +3,14 @@ from point import Point
 from vector import Vector
 
 class Triangle:
-	def __init__(self,a,b,c,color = (0,0,0)):
+	def __init__(self,a,b,c,color = (0,0,0), texture = None):
 		self.a = a
 		self.b = b
 		self.c = c
 		self.u = Vector(self.b,self.a)
 		self.v = Vector(self.c,self.a)
 		self.color = Vector(color[0],color[1],color[2])
+		self.texture = texture
 
 	def intersectionParameter(self,ray):
 		w = Vector(ray.origin,self.a)
@@ -28,4 +29,7 @@ class Triangle:
 			return None
 
 	def normalAt(self,p):
-			return self.u.cross(self.v).normalize()
+		return self.u.cross(self.v).normalize()
+
+	def colorAt(self,p):
+		return self.color

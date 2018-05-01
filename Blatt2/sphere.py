@@ -5,10 +5,11 @@ from ray import Ray
 import math
 
 class Sphere:
-	def __init__(self,center,radius,color = (0,0,0)):
+	def __init__(self,center,radius,color = (0,0,0), texture = None):
 		self.center = center
 		self.radius = radius
 		self.color = Vector(color[0],color[1],color[2])
+		self.texture = texture
 
 	def intersectionParameter(self,ray):
 		co = Vector(self.center,ray.origin)
@@ -23,6 +24,9 @@ class Sphere:
 
 	def normalAt(self,p):
 		return Vector(p,self.center).normalize()
+
+	def colorAt(self,p):
+		return self.color
 
 
 def main():
