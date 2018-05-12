@@ -78,6 +78,7 @@ def copyPoints(objectPoints):
 def rotYp(clockwise = False):
     """ rotate counterclockwise around y axis """
     can.delete(*pointList)
+    print(getBoundingBox())
     if not clockwise:
         alpha = math.pi/12
     else:
@@ -92,7 +93,8 @@ def rotYp(clockwise = False):
     tranformObject(trans1,objectPoints)
     tranformObject(rot,objectPoints)
     tranformObject(trans2,objectPoints)
-
+    print("--------------------------------------")
+    print(getBoundingBox())
     draw(copyPoints(objectPoints))
 
 def rotYn():
@@ -111,50 +113,25 @@ if __name__ == "__main__":
             objectPoints = [array([float(x) for x in x.split()]) for x in pointfile.readlines()]
             objectPoints = [append(x,[float(1.0)]) for x in objectPoints]
 
+    #Bounding Box berechnen
     boundingBox = getBoundingBox()
-    print("Boundingbox\n")
-    print("Bottomleft: " + repr(boundingBox[0]) + "\nTopright: " + repr(boundingBox[1]) + "\n")
+
+    #Mittelpunkt der Boundingbox
     middlepoint = getMiddlePoint(boundingBox[0],boundingBox[1])
+
+    #Translation des Objekts zum Ursprung
     translationMatrix = matrix([[1,0,0,-middlepoint[0]],[0,1,0,-middlepoint[1]],[0,0,1,-middlepoint[2]],[0,0,0,1]])
-
-
-
-    print("\n")
-    print("Translations Matrix:")
-    print(translationMatrix)
     tranformObject(translationMatrix,objectPoints)
+
+    #Erneute berechnung des Boundingbox und ermittlng des richtigen Scalierungsfactors 
     boundingBox = getBoundingBox()
-    print("\n")
-    print("Boundingbox after Translation\n")
-    print("Bottomleft: " + repr(boundingBox[0]) + "\nTopright: " + repr(boundingBox[1]) + "\n")
-
-
-
     scalefactor = getScalingFactor(boundingBox[1])
     scalingMatrix = matrix([[scalefactor,0,0,0],[0,scalefactor,0,0],[0,0,scalefactor,0],[0,0,0,1]])
     tranformObject(scalingMatrix,objectPoints)
     boundingBox = getBoundingBox()
-    print("\n")
-    print("Boundingbox after Scaling\n")
-    print("Bottomleft: " + repr(boundingBox[0]) + "\nTopright: " + repr(boundingBox[1]) + "\n")
 
     scaleAndTranslate = matrix([[WIDTH/2,0,0,WIDTH/2],[0,WIDTH/2,0,HEIGHT/2],[0,0,WIDTH/2,0],[0,0,0,1]])
     tranformObject(scaleAndTranslate,objectPoints)
-
-    
-
-
-    
-
-
-
-    print("\n")
-    print("Boundingbox after Scaling\n")
-    print("Bottomleft: " + repr(boundingBox[0]) + "\nTopright: " + repr(boundingBox[1]) + "\n")
-
-
-
-
 
     
 
@@ -181,7 +158,6 @@ if __name__ == "__main__":
 
 
     # draw points
-    copyPoints(objectPoints)
     draw(copyPoints(objectPoints))
 
     # start
