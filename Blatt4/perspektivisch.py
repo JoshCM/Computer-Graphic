@@ -14,6 +14,7 @@ NOPOINTS = 1000
 
 pointList = [] # list of points (used by Canvas.delete(...))
 objectPoints = []
+pipeline = []
 
 def quit(root=None):
     """ quit programm """
@@ -123,7 +124,7 @@ if __name__ == "__main__":
     translationMatrix = matrix([[1,0,0,-middlepoint[0]],[0,1,0,-middlepoint[1]],[0,0,1,-middlepoint[2]],[0,0,0,1]])
     tranformObject(translationMatrix,objectPoints)
 
-    #Erneute berechnung des Boundingbox und ermittlng des richtigen Scalierungsfactors 
+    #Erneute berechnung des Boundingbox und ermittlng des richtigen Scalierungsfactor 
     boundingBox = getBoundingBox()
     scalefactor = getScalingFactor(boundingBox[1])
     scalingMatrix = matrix([[scalefactor,0,0,0],[0,scalefactor,0,0],[0,0,scalefactor,0],[0,0,0,1]])
