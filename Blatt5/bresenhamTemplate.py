@@ -41,8 +41,44 @@ def drawLines():
 
 def drawBresenhamLine(p,q):
     """ draw a line using bresenhams algorithm """
-    # TODO: implement this function
-    pass
+    gespiegelt = False
+    gedreht = False
+    if not p[0]<= q[0]:
+        p,q = q,p
+
+    m = (q[1]-p[1])/(q[0]-p[0])
+
+    if abs(m) > 1:
+        gedreht = True
+        p[0],p[1] = p[1],p[0]
+        q[0],q[1] = q[1],q[0]
+
+    if m < 0:
+        gespiegelt = True
+        p[0],p[1] = p[0],-p[1]
+        q[0],q[1] = q[0],-q[1]
+    
+    
+    #Mittelpunktalgo
+    a, b = q[1]-p[1],p[0]-q[0]
+    d = 2*a + b
+    IncE = 2*a
+    IncNE = 2*(a+b)
+    y = p[1]
+    for x in range(p[0], q[0]+HPSIZE*2,HPSIZE*2):
+        if gespiegelt and gedreht:
+            pointList.append([-y,x])
+        elif gespiegelt:
+            pointList.append([x,-y])
+        elif gedreht:
+            pointList.append([y,x])
+        if d<= 0:
+            d += IncE
+        else:
+            d+= IncNE
+            y += HPSIZE*2
+
+    drawPoints()
     
 
 def quit(root=None):

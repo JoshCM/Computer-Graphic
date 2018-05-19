@@ -107,7 +107,7 @@ def calcNewLine(Line, lineC, clipRegion):
             bits>>=1
         if c == 8:
             changedPoint = max([p,q], key= lambda x:x.reCode)
-            x = pc[0] + (qc[0]-pc[0])*(clipRegion[1][1]-pc[1])/(qc[1]-pc[1]) #dx/dy*(clipRegion[1][1]-qc[0])+qc[0] #gibt die x Coordinate für ymax aus
+            x = pc[0] + (qc[0]-pc[0])*(clipRegion[1][1]-pc[1])/(qc[1]-pc[1])
             y = clipRegion[1][1]
             if changedPoint == p:
                 p = Point([x,y],clipRegion)
@@ -115,7 +115,7 @@ def calcNewLine(Line, lineC, clipRegion):
                 q = Point([x,y],clipRegion)
         elif c == 4:
             changedPoint = max([p,q], key= lambda x:x.reCode)
-            x = pc[0] + (qc[0]-pc[0])*(clipRegion[0][1]-pc[1])/(qc[1]-pc[1]) #dx/dy*(clipRegion[0][1]-qc[0])+qc[0] #gibt die x Coordinate für ymax aus
+            x = pc[0] + (qc[0]-pc[0])*(clipRegion[0][1]-pc[1])/(qc[1]-pc[1])
             y = clipRegion[0][1]
             if changedPoint == p:
                 p = Point([x,y],clipRegion)
