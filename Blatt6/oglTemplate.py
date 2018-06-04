@@ -10,11 +10,15 @@ import os
 EXIT = -1
 FIRST = 0
 
-with open("Objects/cow_points.raw") as object:
-        points = [x.split() for x in object.readlines()]
-        points = [[float(x[0]),float(x[1]),float(x[2])] for x in points]
-    
-vbo = vbo.VBO(np.array(points,'f'))
+with open("Objects/elephant_points.raw") as object:
+    points = [x.split() for x in object.readlines()]
+    points = [[float(x[0]), float(x[1]), float(x[2])] for x in points]
+
+
+
+vbo = vbo.VBO(np.array(points, 'f'))
+
+xangle = yangle = zangle = 0
 
 
 def init(width, height):
@@ -25,14 +29,23 @@ def init(width, height):
     glOrtho(-1.5, 1.5, -1.5, 1.5, -1.0, 1.0)  # multiply with new p-matrix
     glMatrixMode(GL_MODELVIEW)  # switch to modelview matrix
 
+
 def display():
     """ Render all objects"""
     glClear(GL_COLOR_BUFFER_BIT)  # clear screen
     glColor(0.0, 0.0, 1.0)  # render stuff
+    objMax = [max(points, key=lambda x: x[0])[0], max(points, key=lambda x: x[1])[1], max(points, key=lambda x: x[2])[2]]
+    objMin = [min(points, key=lambda x: x[0])[0], min(points, key=lambda x: x[1])[1], min(points, key=lambda x: x[2])[2]]
+    MITTELPUNKT = [(mi+ma)/2.0 for mi, ma in zip(objMax, objMin)]
+    SCALEFACTOR = 2/max([(ma-mi) for ma,mi in zip(objMax,objMin)])
+    
+    glScale(SCALEFACTOR,SCALEFACTOR,SCALEFACTOR)
+    glTranslate(-MITTELPUNKT[0], -MITTELPUNKT[1], -MITTELPUNKT[2])
+
     vbo.bind()
     glVertexPointerf(vbo)
     glEnableClientState(GL_VERTEX_ARRAY)
-    glDrawArrays(GL_POINTS,0,len(points))
+    glDrawArrays(GL_POINTS, 0, len(points))
     vbo.unbind()
     glDisableClientState(GL_VERTEX_ARRAY)
     glutSwapBuffers()  # swap buffer
@@ -60,13 +73,13 @@ def keyPressed(key, x, y):
         sys.exit()
 
     if key == "x":
-        glRotate(10,1.0,0.0,0.0)
+        glRotate(10, 1.0, 0.0, 0.0)
         glutPostRedisplay()
     elif key == "y":
-        glRotate(10,0.0,1.0,0.0)
+        glRotate(10, 0.0, 1.0, 0.0)
         glutPostRedisplay()
     elif key == "z":
-        glRotate(10,0.0,0.0,1.0)
+        glRotate(10, 0.0, 0.0, 1.0)
         glutPostRedisplay()
 
 
