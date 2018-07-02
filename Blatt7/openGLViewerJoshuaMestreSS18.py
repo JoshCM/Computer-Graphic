@@ -30,7 +30,7 @@ scaleFactor = 0
 axis = np.array([.0,.0,.0])
 ortho = True
 ObjectColor = (1.0,1.0,1.0,1.0)
-lightPos = [0.0,1000.0,100.0]
+lightPos = [0.0,-1000.0,100.0]
 shadow = False
 objMin = []
 
@@ -45,8 +45,8 @@ def init(width, height):
     glEnable(GL_LIGHT0)
     glLightfv(GL_LIGHT0,GL_POSITION,lightPos)
     
-    glEnable(GL_CULL_FACE)
-    glPolygonMode(GL_FRONT, GL_LINE)
+    #glEnable(GL_CULL_FACE)
+    #glPolygonMode(GL_FRONT, GL_LINE)
 
     glMaterialfv(GL_FRONT_AND_BACK,GL_AMBIENT_AND_DIFFUSE,ObjectColor)
     glMatrixMode(GL_PROJECTION)  # switch to projection matrix
@@ -71,7 +71,7 @@ def display():
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)  # clear screen
     glMaterialfv(GL_FRONT_AND_BACK,GL_AMBIENT_AND_DIFFUSE,ObjectColor)
 
-    #glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)
     
     VBO.bind()
     glEnableClientState(GL_VERTEX_ARRAY)
@@ -210,7 +210,7 @@ def mouse(button, state, x, y):
     if button == GLUT_RIGHT_BUTTON:
         if state == GLUT_DOWN:
             doTranslate = True
-            transStartP = np.array([x-WIDTH/2.0, HEIGHT/2.0-y])
+            #transStartP = np.array([x-WIDTH/2.0, HEIGHT/2.0-y])
         if state == GLUT_UP:
             doTranslate = False
 
@@ -228,8 +228,8 @@ def mouseMotion(x, y):
         angle = math.acos(dot)
         axis = np.cross(rotStartP,moveP)
     if doTranslate:
-        xtrans = transStartP[0]+(x-WIDTH/2.0)
-        ytrans = transStartP[1]+(HEIGHT/2.0-y)
+        xtrans = x-WIDTH/2.0
+        ytrans = HEIGHT/2.0-y
     glutPostRedisplay()  
 
 def menu_func(value):
