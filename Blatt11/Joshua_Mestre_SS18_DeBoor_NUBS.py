@@ -54,6 +54,7 @@ def drawCurve():
     lastKnot = n-(k-2)
 
     T = [0]*k+[x for x in range(1,lastKnot)]+[lastKnot]*k
+    print T,lastKnot
 
     if len(pointList) >= k:
         end = T[-1]
@@ -63,7 +64,7 @@ def drawCurve():
             if r != None:
                 curvepoints.append(deBoor(k-1,r,k,pointList,T,idx))
                 idx += 1.0/m
-
+        curvepoints.append(pointList[-1])
         drawPolygon(curvepoints)
 
 def getR(t,T):
@@ -87,7 +88,7 @@ def draw():
     """ draw elements """
     can.delete(*elementList)
     drawPoints()
-    drawPolygon()
+    #drawPolygon()
     drawCurve()
 
 
@@ -142,7 +143,7 @@ if __name__ == "__main__":
     bExit.pack()
     sFr = Frame(mw)
     sFr.pack()
-    kslider = Scale(sFr, from_ = 3, to = 10, command = kslider, orient=HORIZONTAL)
+    kslider = Scale(sFr, from_ = 1, to = 10, command = kslider, orient=HORIZONTAL)
     kslider.pack()
     mslider = Scale(sFr, from_ = 20, to = 100, command = mslider, orient=HORIZONTAL)
     mslider.pack()
